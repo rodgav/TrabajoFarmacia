@@ -1,0 +1,84 @@
+<ngb-alert *ngIf="mensaje" type="danger" (close)="mensaje = null">{{ mensaje }}</ngb-alert>
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="AgregarVenta()">
+    <mat-form-field>
+      <input type="text" placeholder="Producto" matInput formControlName="producto" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option style="width:2000px;" *ngFor="let item of productofilter | async"
+                    (onSelectionChange)="Seleccionado(item.id,item.precio,item.nombre)" [value]="item.nombre">
+          {{item.nombre}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" formControlName="precio" placeholder="Precio">
+      <mat-error *ngIf="isFieldInvalid('precio')">
+        Ingrese el precio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" formControlName="cantidad" (change)="CantidadCambio()" placeholder="Cantidad">
+      <mat-error *ngIf="isFieldInvalid('cantidad')">
+        Ingrese una cantidad
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" formControlName="total" placeholder="Total">
+      <mat-error *ngIf="isFieldInvalid('total')">
+        Ingrese un total
+      </mat-error>
+    </mat-form-field>
+
+    <div class="d-flex justify-content-center">
+      <button class="text-white" mat-button color="primary" type="submit">Agregar</button>
+    </div>
+  </form>
+  <div class="mat-elevation-z8 ventas-table">
+    <div class="d-flex justify-content-center">
+      <h4>TOTAL: {{total}}</h4>
+    </div>
+    <mat-table [dataSource]="dataSource" id="CaptureImpr">
+
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef>NOMBRE</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="precio">
+        <mat-header-cell *matHeaderCellDef>PRECIO</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.precio}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="cantidad">
+        <mat-header-cell *matHeaderCellDef>CANTIDAD</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.cantidad}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef>TOTAL</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.total}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="eliminar">
+        <mat-header-cell *matHeaderCellDef>ELIMINAR</mat-header-cell>
+        <mat-cell *matCellDef="let row; let i = index">
+          <button mat-icon-button color="warn" (click)="EliminarCompra(i)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+    </mat-table>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button class="text-white" mat-button color="primary" (click)="Cancelar()">Cancelar</button>
+  <button class="text-white" mat-button color="primary">Imprimir</button>
+  <button class="text-white" mat-button color="primary" (click)="Vender()">Vender</button>
+</mat-dialog-actions>

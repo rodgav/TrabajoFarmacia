@@ -1,0 +1,9 @@
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>Farmacia</h1>
+</div>
+<mat-toolbar [fxShow]="true" color="primary" *ngIf="logeado$ as logeado">
+  <button mat-button routerLink="medicamentos">Medicamentos</button>
+  <button mat-button routerLink="ventas">Ventas</button>
+  <span fxFlex></span>
+  <button mat-button (click)="Salir()" *ngIf="logeado">Salir</button>
+</mat-toolbar>

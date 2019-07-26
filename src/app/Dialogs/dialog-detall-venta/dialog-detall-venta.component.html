@@ -1,0 +1,41 @@
+<mat-dialog-content>
+  <div class="mat-elevation-z8 ventas-table">
+    <div class="d-flex justify-content-center">
+      <h4>TOTAL: {{total}}</h4>
+    </div>
+    <mat-table [dataSource]="dataSource" id="CaptureImpr">
+
+      <ng-container matColumnDef="idventa">
+        <mat-header-cell *matHeaderCellDef>ID-VENTA</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.idventa}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef>NOMBRE</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.nombre}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="precio">
+        <mat-header-cell *matHeaderCellDef>PRECIO</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.precio}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="cantidad">
+        <mat-header-cell *matHeaderCellDef>CANTIDAD</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.cantidad}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="subtotal">
+        <mat-header-cell *matHeaderCellDef>SUBTOTAL</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.subtotal}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+    </mat-table>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button class="text-white" mat-button color="primary" (click)="Cerrar()">Cerrar</button>
+</mat-dialog-actions>
